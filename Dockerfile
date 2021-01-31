@@ -42,7 +42,11 @@ RUN set -x \
 		+quit \
 		&& mkdir -p ${STEAMAPPDIR}/Mordhau/Saved/Config/LinuxServer/"
 
-ENV SERVER_PORT=7777 \
+ENV SERVER_TICKRATE=60 \
+	SERVER_MAXPLAYERS=16 \
+	SERVER_ADMINPW=321321 \
+	SERVER_PW=123123 \
+	SERVER_PORT=7777 \
 	SERVER_QUERYPORT=27015 \
 	SERVER_BEACONPORT=15000
 
@@ -64,7 +68,7 @@ ENTRYPOINT ${STEAMCMDDIR}/steamcmd.sh \
 			-e 's/{{SERVER_ADMINPW}}/'"$SERVER_ADMINPW"'/g' \
 			-e 's/{{SERVER_MAXPLAYERS}}/'"$SERVER_MAXPLAYERS"'/g' ${STEAMAPPDIR}/Mordhau/Saved/Config/LinuxServer/Game.ini \
 		&& /bin/sed -i -e 's/{{SERVER_TICKRATE}}/'"$SERVER_TICKRATE"'/g' \
-			-e 's/{{SERVER_DEFAULTMAP}}/'"$SERVER_DEFAULTMAP"'/g' ${STEAMAPPDIR}/Mordhau/Saved/Config/LinuxServer/Engine.ini \
+			${STEAMAPPDIR}/Mordhau/Saved/Config/LinuxServer/Engine.ini \
 		&& ${STEAMAPPDIR}/MordhauServer.sh -log \
 			-Port=$SERVER_PORT -QueryPort=$SERVER_QUERYPORT -BeaconPort=$SERVER_BEACONPORT \
 			-GAMEINI=${STEAMAPPDIR}/Mordhau/Saved/Config/LinuxServer/Game.ini \
