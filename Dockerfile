@@ -27,6 +27,7 @@ RUN set -x \
 		libxrandr2 \
 		libcurl3-gnutls \
 		libcurl4 \
+		iputils-ping \
 	&& apt-get clean autoclean \
 	&& apt-get autoremove -y \
 	&& rm -rf /var/lib/apt/lists/* \
